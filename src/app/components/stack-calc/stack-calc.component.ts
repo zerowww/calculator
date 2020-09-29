@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { scan, takeUntil } from 'rxjs/operators';
 
+import { StackCalcService } from '../../services/stack-calc.service';
 import { STACK_CALC_INPUTS } from './../../const/stack-calc-inputs.const';
 import { STACK_CALC_OPERATORS } from './../../const/stack-calc-operators.const';
 
@@ -8,11 +11,26 @@ import { STACK_CALC_OPERATORS } from './../../const/stack-calc-operators.const';
 	templateUrl: './stack-calc.component.html',
 	styleUrls: ['./stack-calc.component.sass']
 })
-export class StackCalcComponent implements OnInit {
+export class StackCalcComponent implements OnInit, OnDestroy {
 	readonly operators = STACK_CALC_OPERATORS;
 	readonly inputs = STACK_CALC_INPUTS;
 
-	constructor() {}
+	displayed$: Observable<string> = new Observable<string>();
+	destroy$: Subject<void> = new Subject<void>();
+
+	constructor(private readonly stackCalcService: StackCalcService) {
+		this.displayed$ = this.stackCalcService.input$.pipe(
+			scan((acc, cur) => {
+				return (acc += cur);
+			}, ''),
+			takeUntil(this.destroy$)
+		);
+	}
 
 	ngOnInit(): void {}
+
+	ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.unsubscribe();
+	}
 }

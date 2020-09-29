@@ -3,8 +3,9 @@
 >
 	<input
 		type="text"
-		class="calc-display text-dark border-0"
+		class="calc-display text-dark border-0 pl-4"
 		aria-label="Value currently displayed on calculator"
+		[value]="displayed$ | async"
 		disabled
 	/>
 	<div class="row row-cols-{{ operators.length }} no-gutters">

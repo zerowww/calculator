@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { Input as InputModel } from '../../models/input.model';
+import { StackCalcService } from '../../services/stack-calc.service';
 
 @Component({
 	selector: 'clc-stack-calc-input',
@@ -9,7 +10,12 @@ import { Input as InputModel } from '../../models/input.model';
 })
 export class StackCalcInputComponent implements OnInit {
 	@Input() input: InputModel = { value: '', displayedValue: '' };
-	constructor() {}
+
+	constructor(private readonly stackCalcService: StackCalcService) {}
 
 	ngOnInit(): void {}
+
+	onClick(value: string): void {
+		this.stackCalcService.input$.next(value);
+	}
 }
