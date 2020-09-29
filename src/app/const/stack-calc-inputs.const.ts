@@ -1,6 +1,29 @@
 import { Input } from '../models/input.model';
 
-export const STACK_CALC_INPUTS: Input[] = [
+export const TOP_ROW_INPUTS: Input[] = [
+	{
+		value: '+',
+		displayedValue: '+'
+	},
+	{
+		value: '-',
+		displayedValue: '-'
+	},
+	{
+		value: '*',
+		displayedValue: 'x'
+	},
+	{
+		value: '/',
+		displayedValue: '÷'
+	},
+	{
+		value: '=',
+		displayedValue: '='
+	}
+];
+
+export const BOTTOM_ROW_INPUTS: Input[] = [
 	{
 		value: '1',
 		displayedValue: '1'
@@ -46,7 +69,7 @@ export const STACK_CALC_INPUTS: Input[] = [
 		displayedValue: '0'
 	},
 	{
-		value: '',
+		value: 'CLR',
 		displayedValue: 'CLR'
 	}
 ];

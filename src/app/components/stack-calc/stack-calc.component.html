@@ -8,13 +8,13 @@
 		[value]="displayed$ | async"
 		disabled
 	/>
-	<div class="row row-cols-{{ operators.length }} no-gutters">
-		<div *ngFor="let operator of operators">
-			<clc-stack-calc-input [input]="operator"></clc-stack-calc-input>
+	<div class="row row-cols-{{ topRowInputs.length }} no-gutters">
+		<div *ngFor="let input of topRowInputs">
+			<clc-stack-calc-input [input]="input"></clc-stack-calc-input>
 		</div>
 	</div>
 	<div class="row row-cols-3 no-gutters">
-		<div *ngFor="let input of inputs">
+		<div *ngFor="let input of bottomRowInputs">
 			<clc-stack-calc-input [input]="input"></clc-stack-calc-input>
 		</div>
 	</div>

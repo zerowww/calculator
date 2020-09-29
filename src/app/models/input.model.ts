@@ -1,4 +1,6 @@
+import { StackCalcActionsEnum } from './stack-calc-actions.enum';
+
 export interface Input {
-	value: string;
+	value: string | StackCalcActionsEnum;
 	displayedValue: string;
 }
