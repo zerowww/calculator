@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CalculatorPageComponent } from './calculator-page.component';
+import { StackCalcInputComponent } from './stack-calc-input.component';
 
-describe('CalculatorPageComponent', () => {
-	let component: CalculatorPageComponent;
-	let fixture: ComponentFixture<CalculatorPageComponent>;
+describe('StackCalcInputComponent', () => {
+	let component: StackCalcInputComponent;
+	let fixture: ComponentFixture<StackCalcInputComponent>;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [CalculatorPageComponent]
+			declarations: [StackCalcInputComponent]
 		}).compileComponents();
 	});
 
 	beforeEach(() => {
-		fixture = TestBed.createComponent(CalculatorPageComponent);
+		fixture = TestBed.createComponent(StackCalcInputComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
