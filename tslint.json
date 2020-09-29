@@ -1,5 +1,5 @@
 {
-	"extends": ["tslint-angular"],
+	"extends": ["tslint-angular", "tslint-config-prettier"],
 	"rules": {
 		"directive-selector": [true, "attribute", "clc", "camelCase"],
 		"component-selector": [true, "element", "clc", "kebab-case"]
