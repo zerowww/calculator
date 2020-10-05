@@ -15,4 +15,20 @@ export class StackCalcService {
 
 		return valuesAsNumberToAdd.reduce((acc, cur) => acc + cur, 0).toString();
 	}
+
+	handleSubstraction(value: string): string {
+		const valuesToSubstract = value.replace(' ', '').split('-');
+		const valuesAsNumberToSubstract = valuesToSubstract.map(
+			(val: string) => +val
+		);
+
+		// initialValue have to be set as first array element
+		const initialValue = valuesAsNumberToSubstract[0];
+
+		// then we remove first array element before substracting every values
+		return valuesAsNumberToSubstract
+			.slice(1)
+			.reduce((acc, cur) => acc - cur, initialValue)
+			.toString();
+	}
 }
