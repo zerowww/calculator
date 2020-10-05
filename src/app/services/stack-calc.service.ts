@@ -31,4 +31,15 @@ export class StackCalcService {
 			.reduce((acc, cur) => acc - cur, initialValue)
 			.toString();
 	}
+
+	handleMultiplication(value: string): string {
+		const valuesToMultiply = value.replace(' ', '').split('*');
+		const valuesAsNumberToMultiply = valuesToMultiply.map(
+			(val: string) => +val
+		);
+
+		return valuesAsNumberToMultiply
+			.reduce((acc, cur) => acc * cur, 1)
+			.toString();
+	}
 }

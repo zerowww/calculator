@@ -40,7 +40,7 @@ export class StackCalcComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {}
 
 	calc(value: string): string {
-		return this.stackCalcService.handleSubstraction(value);
+		return this.stackCalcService.handleMultiplication(value);
 	}
 
 	ngOnDestroy(): void {
