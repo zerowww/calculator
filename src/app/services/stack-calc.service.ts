@@ -9,49 +9,84 @@ export class StackCalcService {
 
 	constructor() {}
 
+	/**
+	 * To handle every kind of operations, we parse the expression with every operator
+	 * handling type by following mathematical priority
+	 * First additions and substractions handlers are called
+	 * Then multiplication and divide handlers
+	 */
+	handleOperations(value: string): string {
+		return this.handleAddition(value);
+	}
+
 	handleAddition(value: string): string {
 		const valuesToAdd = value.replace(' ', '').split('+');
-		const valuesAsNumberToAdd = valuesToAdd.map((val: string) => +val);
+		const handledByHigherPriorityOperatorsValues = valuesToAdd.map(
+			(val: string) => this.handleSubstraction(val)
+		);
 
-		return valuesAsNumberToAdd.reduce((acc, cur) => acc + cur, 0).toString();
+		return handledByHigherPriorityOperatorsValues
+			.reduce((acc, cur) => +acc + +cur, 0)
+			.toString();
 	}
 
 	handleSubstraction(value: string): string {
-		const valuesToSubstract = value.replace(' ', '').split('-');
-		const valuesAsNumberToSubstract = valuesToSubstract.map(
-			(val: string) => +val
+		const valuesToSubstract = value.split('-');
+
+		// reformats array in order to handle negative value by checking if last character from
+		// precedent item is an operator
+		// if it is, reformats as such ["", "20*", "20"] => ["", "-20*-20"]
+		valuesToSubstract.forEach((val: string, index: number, array: string[]) => {
+			const operators = ['/', '+', '-', '*'];
+			const precedentItem = array[index - 1];
+			const isPrecedentItemLastCharacterAnOperator =
+				precedentItem && operators.includes(precedentItem.slice(-1));
+
+			if (val === '') {
+				array[index + 1] = `-${array[index + 1]}`;
+			} else if (isPrecedentItemLastCharacterAnOperator) {
+				array[index - 1] += `-${array[index]}`;
+				array.splice(index);
+			}
+		});
+
+		const handledByHigherPriorityOperatorsValues = valuesToSubstract.map(
+			(val: string) => this.handleMultiplication(val)
 		);
 
 		// initialValue have to be set as first array element
-		const initialValue = valuesAsNumberToSubstract[0];
+		const initialValue = +handledByHigherPriorityOperatorsValues[0];
 
 		// then we remove first array element before substracting every values
-		return valuesAsNumberToSubstract
+		return handledByHigherPriorityOperatorsValues
 			.slice(1)
-			.reduce((acc, cur) => acc - cur, initialValue)
+			.reduce((acc, cur) => acc - +cur, initialValue)
 			.toString();
 	}
 
 	handleMultiplication(value: string): string {
-		const valuesToMultiply = value.replace(' ', '').split('*');
-		const valuesAsNumberToMultiply = valuesToMultiply.map(
-			(val: string) => +val
+		const valuesToMultiply = value.split('*');
+		const handledByHigherPriorityOperatorsValues = valuesToMultiply.map(
+			(val: string) => {
+				return this.handleDivision(val);
+			}
 		);
 
-		return valuesAsNumberToMultiply
-			.reduce((acc, cur) => acc * cur, 1)
+		return handledByHigherPriorityOperatorsValues
+			.reduce((acc, cur) => +acc * +cur, 1)
 			.toString();
 	}
 
 	handleDivision(value: string): string {
-		const valuesToDivide = value.replace(' ', '').split('/');
-		const valuesAsNumberToDivide = valuesToDivide.map((val: string) => +val);
+		const valuesToDivide = value.split('/');
+
+		const valuesAsNumber = valuesToDivide.map((val: string) => +val);
 
 		// initialValue have to be set as first array element
-		const initialValue = valuesAsNumberToDivide[0];
+		const initialValue = valuesAsNumber[0];
 
 		// then we remove first array element before substracting every values
-		return valuesAsNumberToDivide
+		return valuesAsNumber
 			.slice(1)
 			.reduce((acc, cur) => acc / cur, initialValue)
 			.toString();
