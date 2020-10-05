@@ -42,4 +42,18 @@ export class StackCalcService {
 			.reduce((acc, cur) => acc * cur, 1)
 			.toString();
 	}
+
+	handleDivision(value: string): string {
+		const valuesToDivide = value.replace(' ', '').split('/');
+		const valuesAsNumberToDivide = valuesToDivide.map((val: string) => +val);
+
+		// initialValue have to be set as first array element
+		const initialValue = valuesAsNumberToDivide[0];
+
+		// then we remove first array element before substracting every values
+		return valuesAsNumberToDivide
+			.slice(1)
+			.reduce((acc, cur) => acc / cur, initialValue)
+			.toString();
+	}
 }
