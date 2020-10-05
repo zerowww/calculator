@@ -28,7 +28,7 @@ export class StackCalcComponent implements OnInit, OnDestroy {
 					case StackCalcActionsEnum.CLEAR:
 						return '';
 					case StackCalcActionsEnum.GET_RESULT:
-						return this.calculate();
+						return this.calc(acc);
 					default:
 						return (acc += cur);
 				}
@@ -39,8 +39,8 @@ export class StackCalcComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {}
 
-	calculate(): string {
-		return 'ahahah';
+	calc(value: string): string {
+		return this.stackCalcService.handleAddition(value);
 	}
 
 	ngOnDestroy(): void {
